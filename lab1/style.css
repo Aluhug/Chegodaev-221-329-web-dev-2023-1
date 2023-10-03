@@ -1,21 +1,41 @@
 body {
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    background-color: black;
 }
+
+h1{
+    font-size: 68px;
+}
+
+h2{
+    font-size: 40px;
+    text-align: center;
+    line-height: 1.75em;
+}
+
+.Han1{
+    display: flex;
+    justify-content: center;
+}
+
 
 .main-menu ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    color:bisque;
 }
 
 .main-menu li {
     display: inline;
-    margin-right: 10px;
+    margin-right: 30px;
+    font-size: 25px;
+    color:bisque;
 }
 
 .main-menu li:last-child {
     margin-right: 0;
+    color:bisque;
 }
 
 .header {
@@ -24,23 +44,28 @@ body {
     padding: 20px 0;
     font-size: 1.25rem;
     font-weight: bold;
-    background-image: url(images/background.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
+
 }
 
+
 .container {
-    max-width: 75%;
+    max-width: 80%;
     margin: 0 auto;
+    color:#fff8e7;
 }
 
 .main-menu a {
     text-decoration: none;
     color: white;
+    color:#fff8e7;
 }
 
 main p {
     text-align: justify;
+}
+
+.imga {
+    float: right;
 }
 
 p {
@@ -48,51 +73,44 @@ p {
 }
 
 .footer {
+    font-weight: bold;
     background-color: black;
-    color: white;
+    color:#fff8e7;
     padding: 20px 0;
     margin-top: 20px;
 }
 
-.avatar {
-    height: 300px;
-    text-align: center;
-    background-image: url(images/background1.png);
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
-.avatar img {
-    height: 100%;
-}
 
 .btn {
+    font-size: 1.5em;
+    line-height: 1.25em;
     text-decoration: none;
-    color: black;
-    border: 2px solid black;
+    color:#fff8e7;
+    border: 3px solid blueviolet;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 15px;
     display: inline-block;
     transition: color 1s, border-color 1s;
 }
 
-.btn-white {
-    color: white;
-    border-color: white;
+.mee {
+    color:#fff8e7;
+    border: 3px solid blueviolet;
 }
 
 
 .btn:hover {
-    color: blue;
-    border-color: blue;
+    color:  blueviolet;
 }
 
 table {
+    font-size: 2em;
     border-collapse: collapse;
 }
 
 table, th, td {
-    border: 1px solid black;
+    border: 3px solid #fff8e7;
 }
 
 th, td {
@@ -102,8 +120,19 @@ th, td {
 
 .text-center {
     text-align: center;
+    font-size: 1.3em;
+    line-height: 1.2em;
+    font-weight: bold;
 }
 
 .text-upper {
     text-transform: uppercase;
+}
+
+.AA{
+    font-size: 1.5em;
+}
+
+.pad{
+    padding-bottom: 85px;
 }
