@@ -1,0 +1,64 @@
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 23px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    border: 6px solid rgba(42, 8, 240, 0.705);
+    background-color:rgb(214, 209, 216);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+h2{
+    text-align:center;
+    padding-bottom: 0px;
+}
+
+body{
+    background: url(images/1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+legend{
+    font-weight: bold;
+}
+
+input, textarea, select {
+    font-size: 20px;
+    font-family: "Poppins", sans-serif;
+}
+
+fieldset{
+    border: 3px solid rgba(43, 8, 240, 0.452);
+    border-radius: 15px;
+
+}
+
+.form-group {
+    margin-bottom: 10px;
+    
+}
+
+
+.label {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 1.15em;
+    font-weight: bold;
+}
+
+.btn {
+    width: 150px;
+    height: 50px;
+    border: 3px solid rgba(42, 8, 240, 0.705);
+    border-radius: 25%;
+    background-color: rgba(68, 38, 240, 0.555);
+    color: white;
+    margin-top: 10px;
+    font-family: "Poppins", sans-serif;
+}
+.btn:hover {
+    color:  rgb(0, 0, 0);
+}
