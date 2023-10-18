@@ -1,0 +1,59 @@
+*{
+    background-color: black;
+    color: white;
+}
+
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap; /* Позволяет элементам переноситься на новую строку */
+    justify-content: space-between; /* Равномерное распределение по ширине контейнера */
+}
+
+/* Стили для блоков месяцев */
+.month-box {
+    flex: 0 0 calc(31.5% - 10px); /* Ширина блока - 25% с отступами */
+    margin: 9px 0; /* Отступы между блоками сверху и снизу */
+    padding: 10px; /* Внутренний отступ внутри блока */
+    border: 5px solid #cc0099; /* Границы блока */
+    border-radius: 25px; /* Закругленные углы блока */
+    background-color: #66eee7; /* Цвет фона блока */
+}
+
+/* Стили для текста в блоках */
+.month-box p {
+    color: black;
+    font-size: 1.35em;
+    font-weight: bold;
+    line-height: 1.5em;
+    text-align: center;
+    margin: 10px 0; /* Отступы между абзацами внутри блока */
+    background-color: #66eee7; /* Цвет фона блока */
+}
+
+.month-box .MBH{
+    font-size: 2.3em;
+    font-weight: bold;
+
+}
+
+
+ul {
+    list-style: none;
+}
+
+
+
+
+
+
+
+.btn{
+    border: 3px solid white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.btn:hover{
+    color:aqua
+}
