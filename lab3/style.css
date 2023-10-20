@@ -1,6 +1,14 @@
 *{
-    background-color: black;
-    color: white;
+    background-color: #0A0A0A;
+    color: #fffff0;
+    font-family: Arial;
+}
+
+.h1{
+    text-align: center;
+    font-size: 6.5em;
+    font-weight: bold;
+    line-height: 0em;
 }
 
 
@@ -13,22 +21,22 @@
 /* Стили для блоков месяцев */
 .month-box {
     flex: 0 0 calc(31.5% - 10px); /* Ширина блока - 25% с отступами */
-    margin: 9px 0; /* Отступы между блоками сверху и снизу */
+    margin: 8px 0; /* Отступы между блоками сверху и снизу */
     padding: 10px; /* Внутренний отступ внутри блока */
-    border: 5px solid #cc0099; /* Границы блока */
+    border: 8px double yellow; /* Границы бокса с переливающимся стилем */
     border-radius: 25px; /* Закругленные углы блока */
-    background-color: #66eee7; /* Цвет фона блока */
+    background: linear-gradient(to right, black, rgb(108, 16, 194)); /* Градиентный фон */
 }
 
 /* Стили для текста в блоках */
 .month-box p {
-    color: black;
-    font-size: 1.35em;
+    color: #C0C0C0;
+    font-size: 1.55em;
     font-weight: bold;
-    line-height: 1.5em;
+    line-height: 1.1em;
     text-align: center;
     margin: 10px 0; /* Отступы между абзацами внутри блока */
-    background-color: #66eee7; /* Цвет фона блока */
+    background: linear-gradient(to right, black, rgb(108, 16, 194)); /* Градиентный фон */
 }
 
 .month-box .MBH{
@@ -40,10 +48,16 @@
 
 ul {
     list-style: none;
+    text-align: center;
+    padding: 10;
+    margin: 0;
 }
 
-
-
+li {
+    display: inline;
+    margin-right: 50px;
+    font-size: 35px;
+}
 
 
 
@@ -57,3 +71,6 @@ ul {
 .btn:hover{
     color:aqua
 }
+
+
+
