@@ -1,42 +1,81 @@
 *{
     background-color: #0A0A0A;
     color: #fffff0;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 40px;
+    padding: 40px;
+    margin-top: 0;
+}
+
+body p{
+    font-size: 30px;
+}
+
+
+.main{
+    text-align: center;
 }
 
 .h1{
     text-align: center;
-    font-size: 6.5em;
+    font-size: 5.5em;
     font-weight: bold;
     line-height: 0em;
+}
+
+.h2{
+    text-align: center;
+    font-size: 4.5em;
+    font-weight: bold;
+}
+
+.h3{
+    text-align: center;
+    font-size: 3.5em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.image{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.superhuman p{
+    font-size: 20px;
+
 }
 
 
 .flex-container {
     display: flex;
-    flex-wrap: wrap; /* Позволяет элементам переноситься на новую строку */
-    justify-content: space-between; /* Равномерное распределение по ширине контейнера */
+    flex-wrap: wrap; 
+    justify-content: space-between; 
 }
 
-/* Стили для блоков месяцев */
+
 .month-box {
-    flex: 0 0 calc(31.5% - 10px); /* Ширина блока - 25% с отступами */
-    margin: 8px 0; /* Отступы между блоками сверху и снизу */
-    padding: 10px; /* Внутренний отступ внутри блока */
-    border: 8px double yellow; /* Границы бокса с переливающимся стилем */
-    border-radius: 25px; /* Закругленные углы блока */
-    background: linear-gradient(to right, black, rgb(108, 16, 194)); /* Градиентный фон */
+    flex: 0 0 calc(31.5% - 10px); 
+    margin: 8px 0;
+    padding: 10px; 
+    border: 8px double yellow; 
+    border-radius: 25px; 
+    background: linear-gradient(to right, black, rgb(108, 16, 194)); 
 }
 
-/* Стили для текста в блоках */
+
 .month-box p {
-    color: #C0C0C0;
+    color: white;
     font-size: 1.55em;
     font-weight: bold;
     line-height: 1.1em;
     text-align: center;
-    margin: 10px 0; /* Отступы между абзацами внутри блока */
-    background: linear-gradient(to right, black, rgb(108, 16, 194)); /* Градиентный фон */
+    margin: 10px 0; 
+    background: linear-gradient(to right, black, rgb(108, 16, 194)); 
 }
 
 .month-box .MBH{
@@ -62,7 +101,13 @@ li {
 
 
 
+footer{
+    text-align: center;
+    margin-top: 30px;
+}
+
 .btn{
+    font-size: 2em;
     border: 3px solid white;
     border-radius: 5px;
     padding: 5px;
