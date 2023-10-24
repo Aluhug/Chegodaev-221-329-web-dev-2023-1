@@ -21,9 +21,9 @@ body p{
 
 .h1{
     text-align: center;
-    font-size: 5.5em;
+    font-size: 7.5em;
     font-weight: bold;
-    line-height: 0em;
+    line-height: 1;
 }
 
 .h2{
