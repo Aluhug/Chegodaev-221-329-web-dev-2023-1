@@ -1,6 +1,10 @@
 body {
     margin: 0;
-    background-color: rgb(148, 148, 148);
+    background-color: #F2F5F1;
+}
+ 
+span{
+    font-size: 1.5em;
 }
 
 .header {
@@ -11,35 +15,34 @@ body {
     padding-left: 50px;
     border-bottom: 2px solid rgb(243, 240, 54);
 }
-
+ 
 .header > nav {
     display: flex;
 }
-
-
+ 
 .title {
     margin-left: 20px;
 }
-
+ 
 .logo {
     max-height: 70px;
 }
-
+ 
 .container {
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 20px;
 }
-
+ 
 .facts-list-item {
     margin-top: 20px;
     background-color: #d7d7d7;
 }
-
+ 
 .item-content {
     padding: 20px;
 }
-
+ 
 .item-footer {
     display: flex;
     padding: 10px;
@@ -47,11 +50,11 @@ body {
     color: white;
     font-weight: bold;
 }
-
+ 
 .author-name {
     flex-grow: 1;
 }
-
+ 
 .upvotes {
     background-image: url('images/upvote_white.png');
     background-position: left;
@@ -59,35 +62,33 @@ body {
     background-repeat: no-repeat;
     padding-left: 30px;
 }
-
+ 
 .pagination-info {
-    font-size: 1.5em;
     margin-top: 20px;
     font-weight: bold;
     display: flex;
-    border-bottom: 2px solid rgb(243, 240, 54);
 }
-
+ 
 .current-interval-info {
-    font-size: 1.2em;
+    font-size: 1.5em;
     margin-left: auto;
     padding-top: 3px;
 }
-
+ 
 .per-page-btn {
     background-color: white;
     font-size: 20px;
     border: 1px solid rgb(243, 240, 54);
     border-radius: 20px;
 }
-
+ 
 .pagination {
     display: flex;
     justify-content: space-between;
     margin: 40px 0;
     height: 40px;
 }
-
+ 
 .btn {
     background-color:#1d3557;
     padding: 0 10px;
@@ -101,41 +102,49 @@ body {
     box-sizing: border-box;
     transition: color 1s, border-color 1s;
 }
-
+ 
 .btn:hover {
     background-color: #F2F5F1;
     color: black;
 }
-
+ 
 .active {
     background-color: #F2F5F1;
     color: black;
 }
-
+ 
 .first-page-btn, .last-page-btn {
     width: 250px;
-    
 }
-
+ 
 .pages-btns > button {
     margin-right: 5px;
 }
-
+ 
 .search-form {
     margin: 40px 0;
     display: flex;
 }
-
-.search-field {
+ 
+.search-content {
     flex-grow: 1;
-    height: 40px;
     border: 3px solid rgb(248, 244, 0);
     box-sizing: border-box;
-    padding: 0 5px; 
     font-size: 100%;
     outline: none;
+    display: flex;
+    position: relative;
 }
-
+ 
+.search-field {
+    flex-grow: 1;
+    border: 3px solid rgb(248, 244, 0);
+    border: none;
+    outline: none;
+    padding: 0 20px;
+    height: 40px;
+}
+ 
 .search-btn {
     padding: 0 20px;
     font-size: 100%;
@@ -149,28 +158,29 @@ body {
     box-sizing: border-box;
     transition: color 1s, border-color 1s;
 }
-
+ 
 .search-btn:hover {
     background-color: #F2F5F1;
     color: black;
 }
-
-.autocomplete-dropdown {
+ 
+.show-helps {
+    width: 100%;
     position: absolute;
-    width: 998px;
-    max-height: 300px;
-    overflow-y: auto;
+    top: 40px;
     border: 1px solid #ccc;
+    background-color: white;
     border-top: none;
-    display: none;
-    background-color: #fff;
+    left: -4.5px;
 }
-
-.autocomplete-item {
-    padding: 10px;
+ 
+.show-helps-item {
+    padding: 0 20px;
+    margin-bottom: 5px;
     cursor: pointer;
+    transition: background-color .3s ease-in;
 }
-
-.autocomplete-item:hover {
-    background-color: #f1f1f1;
+ 
+.show-helps-item:hover {
+    background-color: rgb(255, 154, 120);
 }

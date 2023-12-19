@@ -1,71 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cats facts</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header class="header">
-        <nav>
-            <img class="logo" src="images/cat_white.png" width="70" alt="Cat">
-            <div class="title">Facts about cats</div>
-        </nav>
-    </header>
-    <main>
-        <div class="container">
-            <div class="search-form">
-                <input type="text" class="search-field">
-                <button class="search-btn">Find</button>
-            </div>
-            <div class="autocomplete-dropdown"></div>
-            <div class="pagination-info">
-                <span>
-                    Show for
-                    <select name="per-page" class="per-page-btn">
-                        <option>5</option>
-                        <option selected>10</option>
-                        <option>15</option>
-                        <option>20</option>
-                        <option>25</option>
-                        <option>50</option>
-                        <option>100</option>
-                    </select>
-                    facts on page
-                </span>
-                <span class="current-interval-info">
-                    Showed pages <span class="current-interval-start">1</span> to <span class="current-interval-end">10</span> of <span class="total-count">190</span>
-                </span>
-            </div>
-            <div class="facts-list" data-url="http://cat-facts-api.std-900.ist.mospolytech.ru/facts">
-                <div class="facts-list-item">
-                    <div class="item-content">
-                        Scottish sailer Alexander Selkirk once survived for 4 years on a deserted island thanks to feral cats that protected him
-                        from large rats during the night.
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cats facts</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <header class="header">
+            <nav>
+                <img class="logo" src="images/cat_white.png" />
+                <div class="title">Facts about cats</div>
+            </nav>
+        </header>
+        <main>
+            <div class="container">
+                <div class="search-form">
+                    <div class="search-content">
+                        <input type="text" class="search-field" />
+                        <div class="show-helps"></div>
                     </div>
-                    <div class="item-footer">
-                        <div class="author-name">
-                            Alex Wohlbruck
+                    <button class="search-btn">Find</button>
+                </div>
+                <div class="pagination-info">
+                    <span>
+                        Show for
+                        <select name="per-page" class="per-page-btn">
+                            <option>5</option>
+                            <option selected>10</option>
+                            <option>15</option>
+                            <option>20</option>
+                            <option>25</option>
+                            <option>50</option>
+                            <option>100</option>
+                        </select>
+                        facts on page
+                    </span>
+                    <span class="current-interval-info">
+                        Showed
+                        <span class="current-interval-start">1</span> for
+                        <span class="current-interval-end">10</span> in
+                        <span class="total-count">190</span>
+                    </span>
+                </div>
+                <div
+                    class="facts-list"
+                    data-url="http://cat-facts-api.std-900.ist.mospolytech.ru/facts">
+                    <div class="facts-list-item">
+                        <div class="item-content">
+                            Scottish sailer Alexander Selkirk once survived for
+                            4 years on a deserted island thanks to feral cats
+                            that protected him from large rats during the night.
                         </div>
-                        <div class="upvotes">
-                            4
+                        <div class="item-footer">
+                            <div class="author-name">Alex Wohlbruck</div>
+                            <div class="upvotes">4</div>
                         </div>
                     </div>
                 </div>
+                <div class="pagination"></div>
             </div>
-            <div class="pagination">
-                <button class="btn first-page-btn" data-page="1">First page</button>
-                <div class="pages-btn">
-                    <button class="btn active" data-page="1">1</button>
-                    <button class="btn" data-page="2">2</button>
-                    <button class="btn" data-page="3">3</button>
-                </div>
-                <button class="btn last-page-btn">Last page</button>
-            </div>
-        </div>
-    </main>
+        </main>
 
-    <script src="main.js" defer></script>
-</body>
+        <script src="main.js" defer></script>
+    </body>
 </html>
