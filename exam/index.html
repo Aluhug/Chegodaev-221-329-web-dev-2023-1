@@ -9,7 +9,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Avenir:wght@400;700&display=swap" rel="stylesheet">
     </head>
     <body>
-        
         <header class="border-bottom border-3 border-secondary">
             <nav class="navbar navbar-expand-lg navbar-custom">
                 <div class="container-fluid">
@@ -22,25 +21,16 @@
                             <p class="fw-bold fs-3">Для тех, кто любит интересные места!</p>
                         </div>
                         <div class="col-md-3 col-6 d-flex justify-content-end">
-                            <!-- Кнопка для показа уведомлений -->
-                            <button class="btn btn-info d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#alertCollapse" aria-expanded="false" aria-controls="alertCollapse">
-                                Показать уведомление
-                            </button>
-        
-                            <!-- Коллапсирующий блок уведомлений -->
-                            <div class="collapse d-md-block" id="alertCollapse">
-                                <div class="alert alert-info text-end fs-5" role="alert">
-                                    Важное уведомление!
-                                </div>
-                            </div>
-        
-                            <!-- Кнопка навигации и личного кабинета -->
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <!-- Кнопка навигации и уведомлений -->
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAlert" aria-controls="navbarNavAlert" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                         </div>
                     </div>
-                    <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="collapse navbar-collapse" id="navbarNavAlert">
+                        <div class="alert alert-info text-end fs-5 d-md-block" role="alert">
+                            Важное уведомление!
+                        </div>
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
                                 <a class="btn btn-custom fw-bold fs-4 border-3" href="profile.html">Личный кабинет</a>
@@ -50,12 +40,8 @@
                 </div>
             </nav>
         </header>
-        
-        
-        
-        
-        <div class="container mt-4">
-            <!-- Блок с описанием компании и изображением -->
+
+    <div class="container mt-4">
     <div class="row mb-4 align-items-center">
         <div class="col-md-6">
             <img src="images/main1.png" class="img-fluid" alt="Красивая картинка" >
@@ -182,7 +168,7 @@
                     </div>
                 </div>
                 </div>
-            </div>
+    </div>
 
 
         <footer class="footerer text-center text-lg-start border-top border-3 border-primary">
