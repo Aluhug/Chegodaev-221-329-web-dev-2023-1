@@ -7,25 +7,31 @@
 
 body {
     font-family: 'Avenir', sans-serif;
+    background-color: #F4EDD4;
 }
 
 .btn-custom {
     background-color: var(--pale-yellow);
-    border-color: var(--yellow-brown); /* Если нужен граница того же цвета */
-    color: #000; /* Цвет текста на кнопке */
+    border-color: var(--mbrown); 
+    color: #000;
     transition: 750ms;
 }
 
 .btn-custom:hover {
-    background-color: var(--yellow-brown); /* Цвет при наведении */
+    background-color: var(--yellow-brown); 
     border-color: var(--pale-yellow);
 }
 
 
 .navbar-custom {
-    background-color: #E1DCCE; /* Бледно-желтый */
-    color: #333; /* Пурпурный */
+    background-color: #E1DCCE; 
+    color: #333; 
 }
 .navbar-brand, .nav-link {
-    color: #333; /* Пурпурный */
+    color: #333; 
+}
+
+.footerer{
+    color: rgb(28, 37, 168);
+    background-color: grey;
 }
