@@ -1,0 +1,31 @@
+:root {
+    --pale-yellow: #FFFF99;
+    --fuxia: #FF00FF;
+    --mbrown: #A52A2A;
+    --yellow-brown: #DAA520;
+  }
+
+body {
+    font-family: 'Avenir', sans-serif;
+}
+
+.btn-custom {
+    background-color: var(--pale-yellow);
+    border-color: var(--yellow-brown); /* Если нужен граница того же цвета */
+    color: #000; /* Цвет текста на кнопке */
+    transition: 750ms;
+}
+
+.btn-custom:hover {
+    background-color: var(--yellow-brown); /* Цвет при наведении */
+    border-color: var(--pale-yellow);
+}
+
+
+.navbar-custom {
+    background-color: #E1DCCE; /* Бледно-желтый */
+    color: #333; /* Пурпурный */
+}
+.navbar-brand, .nav-link {
+    color: #333; /* Пурпурный */
+}
