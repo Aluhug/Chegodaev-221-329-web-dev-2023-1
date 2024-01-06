@@ -17,14 +17,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     searchForm.addEventListener("submit", function (event) {
         event.preventDefault();
-
+    
         // Получаем значения из полей формы
         const routeName = document.getElementById("routeName").value;
         const landmark = document.getElementById("landmarkSelect").value;
-
+    
         // Выполняем запрос на сервер с использованием полученных значений
         searchRoutes(apiKey, routeName, landmark);
     });
+    
     loadLandmarks();
 
     function logJSON(jsonObject) {
@@ -55,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function renderRoutes(routes) {
+        console.log("Rendered Routes:", routes); // Проверьте, что данные для отображения корректны
         routeList.innerHTML = "";
         const table = document.createElement("table");
         table.className = "table table-striped";
@@ -134,47 +136,66 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    function renderLandmarks(landmarks) {
+    function renderLandmarks(routes) {
         const landmarkSelect = document.getElementById("landmarkSelect");
-
+    
         // Очищаем текущие опции
         landmarkSelect.innerHTML = "<option selected>Выберите достопримечательность</option>";
-
+    
+        // Создаем уникальный список достопримечательностей
+        const uniqueLandmarks = new Set();
+        routes.forEach((route) => {
+            const landmarks = route.mainObject.split('–').map(landmark => landmark.trim());
+            landmarks.forEach(landmark => uniqueLandmarks.add(landmark));
+        });
+    
         // Добавляем новые опции
-        landmarks.forEach((landmark) => {
+        uniqueLandmarks.forEach((landmark) => {
             const option = document.createElement("option");
-            option.value = landmark.id;
-            option.textContent = landmark.name;
+            option.value = landmark;
+            option.textContent = landmark;
             landmarkSelect.appendChild(option);
         });
     }
 
     function searchRoutes(apiKey, routeName, landmark, page = 1) {
-        const apiUrl = new URL(
-            `http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes`
-        );
+        const apiUrl = new URL(`http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes`);
         apiUrl.searchParams.append("api_key", apiKey);
         apiUrl.searchParams.append("page", page);
-
+    
         // Добавляем параметры поиска, если они указаны
         if (routeName) {
             apiUrl.searchParams.append("name", routeName);
         }
-        if (landmark) {
-            apiUrl.searchParams.append("landmark", landmark);
-        }
-
+    
         axios.get(apiUrl.toString())
             .then(response => {
                 const data = response.data;
-                renderRoutes(data);
+                renderRoutesByLandmark(data, landmark);
                 logJSON(data);
             })
             .catch(error => {
                 console.error(`Ошибка при запросе данных: ${error}`);
             });
     }
+    function renderRoutesByLandmark(routes, selectedLandmark) {
+        const filteredRoutes = routes.filter(route => route.mainObject == selectedLandmark);
+        if (filteredRoutes.length === 0) {
+            routeList.innerHTML = "<p>Нет маршрутов для выбранной достопримечательности.</p>";
+        } else {
+            renderRoutes(filteredRoutes);
+        }
+    }
 
+    function renderFilteredRoutes(routes, landmark) {
+        routeList.innerHTML = ""; // Очищаем предыдущий вывод маршрутов
+        if (routes.length === 0) {
+            routeList.innerHTML = "<p>Нет маршрутов для выбранной достопримечательности.</p>";
+        } else {
+            renderRoutes(routes);
+        }
+    }
+    
     function renderPagination (totalRoutes) {
         const totalPages = Math.ceil(totalRoutes / routesPerPage);
         paginationList.innerHTML = "";
