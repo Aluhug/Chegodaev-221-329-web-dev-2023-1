@@ -10,6 +10,13 @@ body {
     background-color: #F4EDD4;
 }
 
+@media (max-width: 767px) {
+    body {
+      touch-action: pan-y;
+      overflow-x: hidden;
+    }
+}
+
 .btn-custom {
     background-color: var(--pale-yellow);
     border-color: var(--mbrown); 
@@ -35,4 +42,3 @@ body {
     color: rgb(28, 37, 168);
     background-color: rgb(172, 167, 167);
 }
-
