@@ -28,6 +28,17 @@ document.addEventListener("DOMContentLoaded", function () {
     
     loadLandmarks();
 
+    document.getElementById("searchForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+    
+        // Получаем значения из полей формы
+        const routeName = document.getElementById("routeName").value;
+        const landmark = document.getElementById("landmarkSelect").value;
+    
+        // Выполняем запрос на сервер с использованием полученных значений
+        searchRoutes(apiKey, routeName, landmark, currentPage);
+    });
+
     function logJSON(jsonObject) {
         try {
             const jsonString = JSON.stringify(jsonObject, null, 2);
@@ -168,16 +179,36 @@ document.addEventListener("DOMContentLoaded", function () {
             apiUrl.searchParams.append("name", routeName);
         }
     
+        if (landmark && landmark !== "Выберите достопримечательность") {
+            apiUrl.searchParams.append("landmark", landmark);
+        }
+    
         axios.get(apiUrl.toString())
             .then(response => {
                 const data = response.data;
-                renderRoutesByLandmark(data, landmark);
+                if (landmark && landmark !== "Выберите достопримечательность") {
+                    renderFilteredRoutesByLandmark(data, landmark);
+                } else if (routeName) {
+                    renderFilteredRoutesByName(data, routeName);
+                } else {
+                    renderRoutes(data);
+                }
                 logJSON(data);
             })
             .catch(error => {
                 console.error(`Ошибка при запросе данных: ${error}`);
             });
     }
+
+    function renderFilteredRoutesByName(routes, routeName) {
+        const filteredRoutes = routes.filter(route => route.name.toLowerCase().includes(routeName.toLowerCase()));
+        if (filteredRoutes.length === 0) {
+            routeList.innerHTML = "<p>Нет маршрутов с указанным названием.</p>";
+        } else {
+            renderRoutes(filteredRoutes);
+        }
+    }
+    
     function renderRoutesByLandmark(routes, selectedLandmark) {
         const filteredRoutes = routes.filter(route => route.mainObject == selectedLandmark);
         if (filteredRoutes.length === 0) {
@@ -187,12 +218,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function renderFilteredRoutes(routes, landmark) {
-        routeList.innerHTML = ""; // Очищаем предыдущий вывод маршрутов
-        if (routes.length === 0) {
+    function renderFilteredRoutesByLandmark(routes, selectedLandmark) {
+        const filteredRoutes = routes.filter(route => route.mainObject == selectedLandmark);
+        if (filteredRoutes.length === 0) {
             routeList.innerHTML = "<p>Нет маршрутов для выбранной достопримечательности.</p>";
         } else {
-            renderRoutes(routes);
+            renderRoutes(filteredRoutes);
         }
     }
     
@@ -275,15 +306,4 @@ document.addEventListener("DOMContentLoaded", function () {
     // Загружаем варианты достопримечательностей
     loadLandmarks();
 
-
-        document.getElementById("searchForm").addEventListener("submit", function (event) {
-        event.preventDefault();
-    
-        // Получаем значения из полей формы
-        const routeName = document.getElementById("routeName").value;
-        const landmark = document.getElementById("landmarkSelect").value;
-    
-        // Выполняем запрос на сервер с использованием полученных значений
-        searchRoutes(apiKey, routeName, landmark, currentPage);
-    });
 });
