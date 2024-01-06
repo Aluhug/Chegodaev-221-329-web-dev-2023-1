@@ -89,28 +89,26 @@
             <div class="container mt-4">
                     <h2 class="text-center fw-bold py-3">Минусы нашей компании</h2>
                         <h3 class="fw-bold text-center">Минус 1</h3>
-                        <p class="fs-4 text-center">У наше компании нет минусов. Если вы их здесь искали, то зря</p>
+                        <p class="fs-4 text-center">У наше компании нет минусов. Если вы их здесь искали, то зря. Разве что сайт вообще не работает</p>
             </div>
 
             <!-- Форма поиска маршрутов -->
-            <div class="container mt-4">
-                <h2 class="text-center fw-bold py-3">Поиск маршрутов</h2>
-                <form>
-                    <div class="mb-3">
-                        <label for="routeName" class="form-label">Название маршрута</label>
-                        <input type="text" class="form-control" id="routeName" placeholder="Введите название маршрута">
-                    </div>
-                    <div class="mb-3">
-                        <label for="landmark" class="form-label">Достопримечательность</label>
-                        <select class="form-select" id="landmark">
-                            <option selected>Выберите достопримечательность</option>
-                            <option value="1">Достопримечательность 1</option>
-                            <option value="2">Достопримечательность 2</option>
-                            <option value="3">Достопримечательность 3</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Искать</button>
-                </form>
+            
+            <form id="searchForm">
+                <div class="mb-3">
+                    <label for="routeName" class="form-label">Название маршрута</label>
+                    <input type="text" class="form-control" id="routeName" placeholder="Введите название маршрута">
+                </div>
+                <div class="mb-3">
+                    <label for="landmarkSelect" class="form-label">Достопримечательность</label>
+                    <select class="form-select" id="landmarkSelect">
+                        <option selected>Выберите достопримечательность</option>
+                        <!-- Варианты будут добавлены с помощью JavaScript -->
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Искать</button>
+            </form>
+
             </div>
 
             <h2 class="text-center fw-bold py-3">Пешеходные маршруты Москвы</h2>
@@ -121,55 +119,11 @@
                 </ul>
             </div>
             
-            
-            <h2 class="text-center fw-bold py-3">Гиды</h2>
-            <div class="container">
-                <div class="form-group">
-                    <label for="routeSelection">Выберите маршрут:</label>
-                    <select class="form-control" id="routeSelection">
-                        <!-- Опции с маршрутами будут добавлены с помощью JavaScript -->
-                    </select>
-                </div>
-                <div class="filters">
-                    <label for="languageFilter">Язык:</label>
-                    <select class="form-control" id="languageFilter">
-                        <!-- Опции с языками будут добавлены с помощью JavaScript -->
-                    </select>
-                    <label for="experienceFrom">Опыт работы (от):</label>
-                    <input type="number" class="form-control" id="experienceFrom" min="0">
-                    <label for="experienceTo">Опыт работы (до):</label>
-                    <input type="number" class="form-control" id="experienceTo" min="0">
-                </div>
-                <table class="table" id="guide-table">
-                    <thead>
-                        <tr>
-                            <th>Картинка профиля</th>
-                            <th>ФИО</th>
-                            <th>Языки</th>
-                            <th>Опыт работы</th>
-                            <th>Стоимость в час</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Здесь будут строки с данными гидов -->
-                    </tbody>
-                </table>
-                <div class="pagination" id="guide-pagination">
-                    <!-- Пагинация будет добавлена с помощью JavaScript -->
-                </div>
-            </div>
-
-
-            
-
-        </div>
         
         <div class="container text-center mt-4">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookingModal">
                 Оформить заявку
             </button>
-            <!-- Модальное окно -->
             <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -178,7 +132,6 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                     <div class="modal-body">
-                    <!-- Форма оформления заявки -->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -188,6 +141,8 @@
                 </div>
                 </div>
     </div>
+
+    
 
 
         <footer class="footerer text-center text-lg-start border-top border-3 border-primary">
@@ -200,7 +155,7 @@
         </footer>
         
 
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="main.js"></script>
     </body>
