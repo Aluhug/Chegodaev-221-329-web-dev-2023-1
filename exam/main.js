@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
     loadLandmarks();
-    
+
     document.getElementById("searchForm").addEventListener("submit", function (event) {
         event.preventDefault();
     
@@ -296,17 +296,6 @@ document.addEventListener("DOMContentLoaded", function () {
         paginationNav.appendChild(pagination);
         paginationList.appendChild(paginationNav);
     }
-
-    table.addEventListener('scroll', function() {
-        // Если таблица прокручена вправо до конца
-        if (table.scrollLeft + table.offsetWidth >= table.scrollWidth) {
-            // Убираем горизонтальный скролл у всей страницы
-            document.body.style.overflowX = 'hidden';
-        } else {
-            // В противном случае восстанавливаем горизонтальный скролл для страницы
-            document.body.style.overflowX = 'visible';
-        }
-    });
 
     function tooltipInit() {
         const tooltips = document.querySelectorAll(".tt");
