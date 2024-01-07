@@ -98,7 +98,22 @@ document.addEventListener("DOMContentLoaded", function () {
             const createCell = (textContent) => {
                 const cell = document.createElement("td");
                 cell.classList.add("tt");
-                cell.textContent = textContent;
+            
+                // Проверяем длину текста
+                const maxLength = 80; // Задайте максимальную длину, при которой происходит сокращение
+            
+                if (textContent.length > maxLength) {
+                    const truncatedText = textContent.substring(0, maxLength) + '...';
+                    cell.textContent = truncatedText;
+            
+                    // Добавляем всплывающую подсказку с полным текстом
+                    cell.setAttribute('data-bs-toggle', 'tooltip');
+                    cell.setAttribute('data-bs-placement', 'top');
+                    cell.setAttribute('title', textContent);
+                } else {
+                    cell.textContent = textContent;
+                }
+            
                 return cell;
             };
 
@@ -295,6 +310,17 @@ document.addEventListener("DOMContentLoaded", function () {
         paginationNav.appendChild(pagination);
         paginationList.appendChild(paginationNav);
     }
+
+    table.addEventListener('scroll', function() {
+        // Если таблица прокручена вправо до конца
+        if (table.scrollLeft + table.offsetWidth >= table.scrollWidth) {
+            // Убираем горизонтальный скролл у всей страницы
+            document.body.style.overflowX = 'hidden';
+        } else {
+            // В противном случае восстанавливаем горизонтальный скролл для страницы
+            document.body.style.overflowX = 'visible';
+        }
+    });
 
     function tooltipInit() {
         const tooltips = document.querySelectorAll(".tt");
