@@ -8,26 +8,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const routesPerPage = 10;
     let currentPage = 1;
     let selectedRoute = null;
-    function initializePage() {
-        getRoutes(apiKey);
-    }
-    initializePage(); // Вызываем функцию при загрузке страницы
-
+    getRoutes(apiKey);
     const searchForm = document.getElementById("searchForm");
 
     searchForm.addEventListener("submit", function (event) {
         event.preventDefault();
     
-        // Получаем значения из полей формы
         const routeName = document.getElementById("routeName").value;
         const landmark = document.getElementById("landmarkSelect").value;
     
-        // Выполняем запрос на сервер с использованием полученных значений
         searchRoutes(apiKey, routeName, landmark);
     });
     
     loadLandmarks();
-
+    
     document.getElementById("searchForm").addEventListener("submit", function (event) {
         event.preventDefault();
     
@@ -224,14 +218,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     
-    function renderRoutesByLandmark(routes, selectedLandmark) {
-        const filteredRoutes = routes.filter(route => route.mainObject == selectedLandmark);
-        if (filteredRoutes.length === 0) {
-            routeList.innerHTML = "<p>Нет маршрутов для выбранной достопримечательности.</p>";
-        } else {
-            renderRoutes(filteredRoutes);
-        }
-    }
 
     function renderFilteredRoutesByLandmark(routes, selectedLandmark) {
         const filteredRoutes = routes.filter(route => route.mainObject == selectedLandmark);
