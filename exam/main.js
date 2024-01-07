@@ -164,17 +164,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function renderLandmarks(routes) {
         const landmarkSelect = document.getElementById("landmarkSelect");
-    
+        
         // Очищаем текущие опции
         landmarkSelect.innerHTML = "<option selected>Выберите достопримечательность</option>";
-    
+        
         // Создаем уникальный список достопримечательностей
         const uniqueLandmarks = new Set();
         routes.forEach((route) => {
-            const landmarks = route.mainObject.split('–').map(landmark => landmark.trim());
-            landmarks.forEach(landmark => uniqueLandmarks.add(landmark));
+            const landmarks = route.mainObject.trim();
+            uniqueLandmarks.add(landmarks);
         });
-    
+        
         // Добавляем новые опции
         uniqueLandmarks.forEach((landmark) => {
             const option = document.createElement("option");
@@ -183,6 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
             landmarkSelect.appendChild(option);
         });
     }
+    
 
     function searchRoutes(apiKey, routeName, landmark, page = 1) {
         const apiUrl = new URL(`http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes`);
