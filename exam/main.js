@@ -14,10 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     searchForm.addEventListener("submit", function (event) {
         event.preventDefault();
-    
         const routeName = document.getElementById("routeName").value;
         const landmark = document.getElementById("landmarkSelect").value;
-    
         searchRoutes(apiKey, routeName, landmark);
     });
     
@@ -29,8 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Получаем значения из полей формы
         const routeName = document.getElementById("routeName").value;
         const landmark = document.getElementById("landmarkSelect").value;
-    
-        // Выполняем запрос на сервер с использованием полученных значений
+
         searchRoutes(apiKey, routeName, landmark, currentPage);
     });
 
@@ -120,28 +117,21 @@ document.addEventListener("DOMContentLoaded", function () {
             selectButton.textContent = "Выбрать";
             selectButton.addEventListener("click", () => {
                 if (selectedRouteId === route.id) {
-                    // Если текущий маршрут уже выбран, сбросить выбор
                     selectedRouteId = null;
                 } else {
-                    // Иначе выбрать новый маршрут
                     selectedRouteId = route.id;
                 }
-
                 renderRoutes(routes);
             });
-
             row.appendChild(nameCell);
             row.appendChild(descriptionCell);
             row.appendChild(mainObjectCell);
             selectCell.appendChild(selectButton);
             row.appendChild(selectCell);
-
             tableBody.appendChild(row);
         });
-
         table.appendChild(tableBody);
         routeList.appendChild(table);
-
         renderPagination(routes.length);
         tooltipInit();
     }
@@ -151,7 +141,6 @@ document.addEventListener("DOMContentLoaded", function () {
             `http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes`
         );
         apiUrl.searchParams.append("api_key", apiKey);
-
         axios.get(apiUrl.toString())
             .then(response => {
                 const landmarks = response.data;
@@ -161,37 +150,27 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error(`Ошибка при запросе данных: ${error}`);
             });
     }
-
     function renderLandmarks(routes) {
         const landmarkSelect = document.getElementById("landmarkSelect");
-        
-        // Очищаем текущие опции
-        landmarkSelect.innerHTML = "<option selected>Выберите достопримечательность</option>";
-        
-        // Создаем уникальный список достопримечательностей
-        const uniqueLandmarks = new Set();
+            landmarkSelect.innerHTML = "<option selected>Выберите достопримечательность</option>";
+            const uniqueLandmarks = new Set();
         routes.forEach((route) => {
-            const landmarks = route.mainObject.trim();
-            uniqueLandmarks.add(landmarks);
+            const landmarks = route.mainObject.split('–').map(landmark => landmark.trim());
+            landmarks.forEach(landmark => uniqueLandmarks.add(landmark));
         });
-        
-        // Добавляем новые опции
-        uniqueLandmarks.forEach((landmark) => {
+            uniqueLandmarks.forEach((landmark) => {
             const option = document.createElement("option");
             option.value = landmark;
             option.textContent = landmark;
             landmarkSelect.appendChild(option);
         });
     }
-    
 
     function searchRoutes(apiKey, routeName, landmark, page = 1) {
         const apiUrl = new URL(`http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes`);
         apiUrl.searchParams.append("api_key", apiKey);
         apiUrl.searchParams.append("page", page);
-    
-        // Добавляем параметры поиска, если они указаны
-        if (routeName) {
+            if (routeName) {
             apiUrl.searchParams.append("name", routeName);
         }
     
@@ -238,13 +217,10 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderPagination (totalRoutes) {
         const totalPages = Math.ceil(totalRoutes / routesPerPage);
         paginationList.innerHTML = "";
-
         const paginationNav = document.createElement("nav");
         paginationNav.setAttribute("aria-label", "Page navigation example");
-
         const pagination = document.createElement("ul");
         pagination.className = "pagination justify-content-center";
-
         const prevPageItem = document.createElement("li");
         prevPageItem.className = "page-item";
         const prevPageLink = document.createElement("a");
@@ -273,17 +249,16 @@ document.addEventListener("DOMContentLoaded", function () {
             link.className = "page-link";
             link.href = "#";
             link.textContent = i;
-
             link.addEventListener("click", (e) => {
                 e.preventDefault();
                 currentPage = i;
-                getRoutes(apiKey, currentPage);
+                const routeName = document.getElementById("routeName").value;
+            const landmark = document.getElementById("landmarkSelect").value;
+            searchRoutes(apiKey, routeName, landmark, currentPage);
             });
-
             pageLink.appendChild(link);
             pagination.appendChild(pageLink);
         }
-
         const nextPageItem = document.createElement("li");
         const nextPageLink = document.createElement("a");
         nextPageItem.className = "page-item";
@@ -305,12 +280,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     table.addEventListener('scroll', function() {
-        // Если таблица прокручена вправо до конца
         if (table.scrollLeft + table.offsetWidth >= table.scrollWidth) {
-            // Убираем горизонтальный скролл у всей страницы
             document.body.style.overflowX = 'hidden';
         } else {
-            // В противном случае восстанавливаем горизонтальный скролл для страницы
             document.body.style.overflowX = 'visible';
         }
     });
@@ -321,8 +293,5 @@ document.addEventListener("DOMContentLoaded", function () {
             new bootstrap.Tooltip(t);
         });
     }
-
-    // Загружаем варианты достопримечательностей
     loadLandmarks();
-
 });
