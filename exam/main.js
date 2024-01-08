@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const routesPerPage = 10;
     let currentPage = 1;
     let selectedRouteId = null;
+    let selectedGuideId = null;
     getRoutes(apiKey);
     const searchForm = document.getElementById("searchForm");
     searchForm.addEventListener("submit", function (event) {
@@ -51,66 +52,87 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    function renderGuides(guides) {
-        const guidesContainer = document.getElementById('guides-container');
-        guidesContainer.innerHTML = ''; 
-    
-        if (guides.length === 0) {
-            const noGuidesMessage = document.createElement('p');
-            noGuidesMessage.textContent = 'Для выбранного маршрута нет доступных гидов.';
-            guidesContainer.appendChild(noGuidesMessage);
-            return;
-        }
-        const table = document.createElement('table');
-        table.classList.add('table', 'table-bordered', 'table-hover');
-        const thead = document.createElement('thead');
-        const headerRow = document.createElement('tr');
-        const headers = ['Картинка профиля', 'ФИО', 'Языки', 'Опыт работы', 'Стоимость (руб/час)', 'Выбор'];
-        headers.forEach(headerText => {
-            const th = document.createElement('th');
-            th.textContent = headerText;
-            headerRow.appendChild(th);
-        });
-        thead.appendChild(headerRow);
-        table.appendChild(thead);
-        const tbody = document.createElement('tbody');
-        guides.forEach(guide => {
-            const row = document.createElement('tr');
-    
-            const profileImageCell = document.createElement('td');
-            profileImageCell.innerHTML = '<img src="images/11.webp" style="max-width: 50px; max-height: 50px;">';
-            row.appendChild(profileImageCell);
-    
-            const nameCell = document.createElement('td');
-            nameCell.textContent = guide.name;
-            row.appendChild(nameCell);
-    
-            const languagesCell = document.createElement('td');
-            languagesCell.textContent = guide.language;
-            row.appendChild(languagesCell);
-    
-            const experienceCell = document.createElement('td');
-            experienceCell.textContent = guide.workExperience + ' лет';
-            row.appendChild(experienceCell);
-    
-            const priceCell = document.createElement('td');
-            priceCell.textContent = guide.pricePerHour + ' руб/час';
-            row.appendChild(priceCell);
-    
-            const selectCell = document.createElement('td');
-            const selectButton = document.createElement('button');
-            selectButton.className = 'btn btn-primary';
-            selectButton.textContent = 'Выбрать';
-            selectButton.addEventListener('click', () => {
-                highlightGuideRow(guide.id);
-            });
-            selectCell.appendChild(selectButton);
-            row.appendChild(selectCell);
-            tbody.appendChild(row);
-        });
-        table.appendChild(tbody);
-        guidesContainer.appendChild(table);
+function renderGuides(guides) {
+    const guidesContainer = document.getElementById('guides-container');
+    guidesContainer.innerHTML = '';
+
+    if (guides.length === 0) {
+        const noGuidesMessage = document.createElement('p');
+        noGuidesMessage.textContent = 'Для выбранного маршрута нет доступных гидов.';
+        guidesContainer.appendChild(noGuidesMessage);
+        return;
     }
+
+    const table = document.createElement('table');
+    table.classList.add('table', 'table-bordered', 'table-hover');
+
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const headers = ['Картинка профиля', 'ФИО', 'Языки', 'Опыт работы', 'Стоимость (руб/час)', 'Выбор'];
+
+    headers.forEach(headerText => {
+        const th = document.createElement('th');
+        th.textContent = headerText;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+
+    guides.forEach(guide => {
+        const row = document.createElement('tr');
+
+        const profileImageCell = document.createElement('td');
+        profileImageCell.innerHTML = '<img src="images/11.webp" style="max-width: 50px; max-height: 50px;">';
+        row.appendChild(profileImageCell);
+
+        const nameCell = document.createElement('td');
+        nameCell.textContent = guide.name;
+        row.appendChild(nameCell);
+
+        const languagesCell = document.createElement('td');
+        languagesCell.textContent = guide.language;
+        row.appendChild(languagesCell);
+
+        const experienceCell = document.createElement('td');
+        experienceCell.textContent = guide.workExperience + ' лет';
+        row.appendChild(experienceCell);
+
+        const priceCell = document.createElement('td');
+        priceCell.textContent = guide.pricePerHour + ' руб/час';
+        row.appendChild(priceCell);
+
+        const selectCell = document.createElement('td');
+        const selectButton = document.createElement('button');
+        selectButton.className = 'btn btn-primary';
+        selectButton.textContent = 'Нанять';
+
+        // Проверяем, совпадает ли идентификатор гида с текущим выбранным
+        if (guide.id === selectedGuideId) {
+            row.classList.add('table-success'); // Применяем подсветку
+        }
+
+        selectButton.addEventListener('click', () => {
+            if (guide.id === selectedGuideId) {
+                selectedGuideId = null;
+                row.classList.remove('table-success'); // Снимаем выделение
+            } else {
+                selectedGuideId = guide.id;
+                row.classList.add('table-success'); // Применяем подсветку
+            }
+        });
+
+        selectCell.appendChild(selectButton);
+        row.appendChild(selectCell);
+        tbody.appendChild(row);
+    });
+
+    table.appendChild(tbody);
+    guidesContainer.appendChild(table);
+}
+
     function loadGuides(routeId) {
         if (routeId !== null) {
             const apiUrl = `http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes/${routeId}/guides?api_key=${apiKey}`;
@@ -210,20 +232,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     function renderLandmarks(routes) {
         const landmarkSelect = document.getElementById("landmarkSelect");
-            landmarkSelect.innerHTML = "<option selected>Выберите достопримечательность</option>";
-            const uniqueLandmarks = new Set();
+        landmarkSelect.innerHTML = "<option selected>Выберите достопримечательность</option>";
+        const uniqueLandmarks = new Set();
         routes.forEach((route) => {
-            const landmarks = route.mainObject.split('–').map(landmark => landmark.trim());
-            landmarks.forEach(landmark => uniqueLandmarks.add(landmark));
+            const landmark = route.mainObject.trim();
+            uniqueLandmarks.add(landmark);
         });
-            uniqueLandmarks.forEach((landmark) => {
+        uniqueLandmarks.forEach((landmark) => {
             const option = document.createElement("option");
             option.value = landmark;
             option.textContent = landmark;
             landmarkSelect.appendChild(option);
         });
     }
-
+    
+    
     function searchRoutes(apiKey, routeName, landmark, page = 1) {
         const apiUrl = new URL(`http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes`);
         apiUrl.searchParams.append("api_key", apiKey);
@@ -333,14 +356,6 @@ document.addEventListener("DOMContentLoaded", function () {
         paginationNav.appendChild(pagination);
         paginationList.appendChild(paginationNav);
     }
-
-    table.addEventListener('scroll', function() {
-        if (table.scrollLeft + table.offsetWidth >= table.scrollWidth) {
-            document.body.style.overflowX = 'hidden';
-        } else {
-            document.body.style.overflowX = 'visible';
-        }
-    });
 
     function tooltipInit() {
         const tooltips = document.querySelectorAll(".tt");
