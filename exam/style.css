@@ -36,3 +36,8 @@ body {
     color: rgb(28, 37, 168);
     background-color: rgb(172, 167, 167);
 }
+
+.selected-guide {
+    background-color: #a0c0e0; /* Любой цвет фона, который вы хотите использовать для выделенных гидов */
+    color: #000; /* Цвет текста */
+}

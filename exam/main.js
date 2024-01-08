@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const paginationList = document.getElementById("pagination-list");
     const routesPerPage = 10;
     let currentPage = 1;
-    let selectedRoute = null;
     let selectedRouteId = null;
     getRoutes(apiKey);
     const searchForm = document.getElementById("searchForm");
@@ -57,6 +56,107 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error(`Ошибка при запросе данных: ${error}`);
             });
     }
+
+    
+    function renderGuides(guides) {
+        const guidesContainer = document.getElementById('guides-container');
+        guidesContainer.innerHTML = ''; // Очищаем содержимое контейнера перед отрисовкой
+    
+        if (guides.length === 0) {
+            const noGuidesMessage = document.createElement('p');
+            noGuidesMessage.textContent = 'Для выбранного маршрута нет доступных гидов.';
+            guidesContainer.appendChild(noGuidesMessage);
+            return;
+        }
+    
+        const table = document.createElement('table');
+        table.classList.add('table', 'table-bordered', 'table-hover');
+    
+        // Заголовок таблицы
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        const headers = ['Картинка профиля', 'ФИО', 'Языки', 'Опыт работы', 'Стоимость (руб/час)', 'Выбор'];
+    
+        headers.forEach(headerText => {
+            const th = document.createElement('th');
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+        });
+    
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+    
+        // Тело таблицы
+        const tbody = document.createElement('tbody');
+        guides.forEach(guide => {
+            const row = document.createElement('tr');
+    
+            // Картинка профиля
+            const profileImageCell = document.createElement('td');
+            profileImageCell.innerHTML = '<img src="images/11,jpg" style="max-width: 50px; max-height: 50px;">';
+            row.appendChild(profileImageCell);
+    
+            // ФИО
+            const nameCell = document.createElement('td');
+            nameCell.textContent = guide.name;
+            row.appendChild(nameCell);
+    
+            // Языки
+            const languagesCell = document.createElement('td');
+            languagesCell.textContent = guide.language;
+            row.appendChild(languagesCell);
+    
+            // Опыт работы
+            const experienceCell = document.createElement('td');
+            experienceCell.textContent = guide.workExperience + ' лет';
+            row.appendChild(experienceCell);
+    
+            // Стоимость (руб/час)
+            const priceCell = document.createElement('td');
+            priceCell.textContent = guide.pricePerHour + ' руб/час';
+            row.appendChild(priceCell);
+    
+            // Столбец с возможностью выбора гида
+            const selectCell = document.createElement('td');
+            const selectButton = document.createElement('button');
+            selectButton.className = 'btn btn-primary';
+            selectButton.textContent = 'Выбрать';
+            selectButton.addEventListener('click', () => {
+                // Ваша логика выбора гида, например, выделение строки
+                highlightGuideRow(guide.id);
+    
+                // Дополнительные действия при выборе гида
+                // ...
+    
+            });
+            selectCell.appendChild(selectButton);
+            row.appendChild(selectCell);
+    
+            tbody.appendChild(row);
+        });
+    
+        table.appendChild(tbody);
+        guidesContainer.appendChild(table);
+    }
+    
+    function loadGuides(routeId) {
+        if (routeId !== null) {
+            const apiUrl = `http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes/${routeId}/guides?api_key=${apiKey}`;
+            
+            axios.get(apiUrl)
+                .then(response => {
+                    const guides = response.data;
+                    renderGuides(guides);
+                })
+                .catch(error => {
+                    console.error(`Ошибка при запросе данных о гидах: ${error}`);
+                });
+        } else {
+            // Очистка содержимого контейнера гидов, если маршрут не выбран
+            renderGuides([]);
+        }
+    }
+    
 
     function renderRoutes(routes) {
         console.log("Rendered Routes:", routes); // Проверьте, что данные для отображения корректны
@@ -118,8 +218,10 @@ document.addEventListener("DOMContentLoaded", function () {
             selectButton.addEventListener("click", () => {
                 if (selectedRouteId === route.id) {
                     selectedRouteId = null;
+                    loadGuides(selectedRouteId);
                 } else {
                     selectedRouteId = route.id;
+                    loadGuides(selectedRouteId);
                 }
                 renderRoutes(routes);
             });
