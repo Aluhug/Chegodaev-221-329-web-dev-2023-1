@@ -10,20 +10,15 @@ document.addEventListener("DOMContentLoaded", function () {
     let selectedRouteId = null;
     getRoutes(apiKey);
     const searchForm = document.getElementById("searchForm");
-
     searchForm.addEventListener("submit", function (event) {
         event.preventDefault();
         const routeName = document.getElementById("routeName").value;
         const landmark = document.getElementById("landmarkSelect").value;
         searchRoutes(apiKey, routeName, landmark);
     });
-    
     loadLandmarks();
-    
     document.getElementById("searchForm").addEventListener("submit", function (event) {
         event.preventDefault();
-    
-        // Получаем значения из полей формы
         const routeName = document.getElementById("routeName").value;
         const landmark = document.getElementById("landmarkSelect").value;
 
@@ -45,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
         );
         apiUrl.searchParams.append("api_key", apiKey);
         apiUrl.searchParams.append("page", page);
-
         axios.get(apiUrl.toString())
             .then(response => {
                 const data = response.data;
@@ -57,10 +51,9 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    
     function renderGuides(guides) {
         const guidesContainer = document.getElementById('guides-container');
-        guidesContainer.innerHTML = ''; // Очищаем содержимое контейнера перед отрисовкой
+        guidesContainer.innerHTML = ''; 
     
         if (guides.length === 0) {
             const noGuidesMessage = document.createElement('p');
@@ -68,81 +61,59 @@ document.addEventListener("DOMContentLoaded", function () {
             guidesContainer.appendChild(noGuidesMessage);
             return;
         }
-    
         const table = document.createElement('table');
         table.classList.add('table', 'table-bordered', 'table-hover');
-    
-        // Заголовок таблицы
         const thead = document.createElement('thead');
         const headerRow = document.createElement('tr');
         const headers = ['Картинка профиля', 'ФИО', 'Языки', 'Опыт работы', 'Стоимость (руб/час)', 'Выбор'];
-    
         headers.forEach(headerText => {
             const th = document.createElement('th');
             th.textContent = headerText;
             headerRow.appendChild(th);
         });
-    
         thead.appendChild(headerRow);
         table.appendChild(thead);
-    
-        // Тело таблицы
         const tbody = document.createElement('tbody');
         guides.forEach(guide => {
             const row = document.createElement('tr');
     
-            // Картинка профиля
             const profileImageCell = document.createElement('td');
             profileImageCell.innerHTML = '<img src="images/11.webp" style="max-width: 50px; max-height: 50px;">';
             row.appendChild(profileImageCell);
     
-            // ФИО
             const nameCell = document.createElement('td');
             nameCell.textContent = guide.name;
             row.appendChild(nameCell);
     
-            // Языки
             const languagesCell = document.createElement('td');
             languagesCell.textContent = guide.language;
             row.appendChild(languagesCell);
     
-            // Опыт работы
             const experienceCell = document.createElement('td');
             experienceCell.textContent = guide.workExperience + ' лет';
             row.appendChild(experienceCell);
     
-            // Стоимость (руб/час)
             const priceCell = document.createElement('td');
             priceCell.textContent = guide.pricePerHour + ' руб/час';
             row.appendChild(priceCell);
     
-            // Столбец с возможностью выбора гида
             const selectCell = document.createElement('td');
             const selectButton = document.createElement('button');
             selectButton.className = 'btn btn-primary';
             selectButton.textContent = 'Выбрать';
             selectButton.addEventListener('click', () => {
-                // Ваша логика выбора гида, например, выделение строки
                 highlightGuideRow(guide.id);
-    
-                // Дополнительные действия при выборе гида
-                // ...
-    
             });
             selectCell.appendChild(selectButton);
             row.appendChild(selectCell);
-    
             tbody.appendChild(row);
         });
-    
         table.appendChild(tbody);
         guidesContainer.appendChild(table);
     }
-    
     function loadGuides(routeId) {
         if (routeId !== null) {
             const apiUrl = `http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes/${routeId}/guides?api_key=${apiKey}`;
-            
             axios.get(apiUrl)
                 .then(response => {
                     const guides = response.data;
@@ -152,14 +123,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.error(`Ошибка при запросе данных о гидах: ${error}`);
                 });
         } else {
-            // Очистка содержимого контейнера гидов, если маршрут не выбран
             renderGuides([]);
         }
     }
-    
 
     function renderRoutes(routes) {
-        console.log("Rendered Routes:", routes); // Проверьте, что данные для отображения корректны
+        console.log("Rendered Routes:", routes); 
         routeList.innerHTML = "";
         const table = document.createElement("table");
         table.className = "table table-striped";
@@ -172,45 +141,32 @@ document.addEventListener("DOMContentLoaded", function () {
                 <th></th>
             </tr>
         `;
-
         table.appendChild(tableHeader);
-
         const tableBody = document.createElement("tbody");
-
         const start = (currentPage - 1) * routesPerPage;
         const end = start + routesPerPage;
         const routesToShow = routes.slice(start, end);
         routesToShow.forEach((route) => {
             const row = document.createElement("tr");
             if (selectedRouteId === route.id) row.classList.add("table-success");
-
-
             const createCell = (textContent) => {
                 const cell = document.createElement("td");
                 cell.classList.add("tt");
-            
-                // Проверяем длину текста
-                const maxLength = 80; // Задайте максимальную длину, при которой происходит сокращение
-            
+                const maxLength = 80; 
                 if (textContent.length > maxLength) {
                     const truncatedText = textContent.substring(0, maxLength) + '...';
-                    cell.textContent = truncatedText;
-            
-                    // Добавляем всплывающую подсказку с полным текстом
+                    cell.textContent = truncatedText;         
                     cell.setAttribute('data-bs-toggle', 'tooltip');
                     cell.setAttribute('data-bs-placement', 'top');
                     cell.setAttribute('title', textContent);
                 } else {
                     cell.textContent = textContent;
                 }
-            
                 return cell;
             };
-
             const nameCell = createCell(route.name);
             const descriptionCell = createCell(route.description);
             const mainObjectCell = createCell(route.mainObject);
-
             const selectCell = document.createElement("td");
             const selectButton = document.createElement("button");
             selectButton.className = "btn btn-primary";
@@ -275,11 +231,9 @@ document.addEventListener("DOMContentLoaded", function () {
             if (routeName) {
             apiUrl.searchParams.append("name", routeName);
         }
-    
         if (landmark && landmark !== "Выберите достопримечательность") {
             apiUrl.searchParams.append("landmark", landmark);
         }
-    
         axios.get(apiUrl.toString())
             .then(response => {
                 const data = response.data;
@@ -305,7 +259,6 @@ document.addEventListener("DOMContentLoaded", function () {
             renderRoutes(filteredRoutes);
         }
     }
-    
 
     function renderFilteredRoutesByLandmark(routes, selectedLandmark) {
         const filteredRoutes = routes.filter(route => route.mainObject == selectedLandmark);
