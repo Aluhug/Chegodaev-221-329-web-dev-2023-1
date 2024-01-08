@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
             // Картинка профиля
             const profileImageCell = document.createElement('td');
-            profileImageCell.innerHTML = '<img src="images/11,jpg" style="max-width: 50px; max-height: 50px;">';
+            profileImageCell.innerHTML = '<img src="images/11.webp" style="max-width: 50px; max-height: 50px;">';
             row.appendChild(profileImageCell);
     
             // ФИО
