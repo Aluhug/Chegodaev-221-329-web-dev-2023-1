@@ -287,62 +287,85 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     // Функция для поиска маршрута по назвванию и достопримечательностям
     function searchRoutes(apiKey, routeName, landmark, page = 1) {
+        // Формируем URL для отправки запроса на сервер
         const apiUrl = new URL(`http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes`);
+        // Добавляем параметр "api_key" к URL для аутентификации
         apiUrl.searchParams.append("api_key", apiKey);
+        // Добавляем параметр "page" для указания номера страницы (по умолчанию 1)
         apiUrl.searchParams.append("page", page);
-            if (routeName) {
+        // Если указано название маршрута, добавляем параметр "name" к URL
+        if (routeName) {
             apiUrl.searchParams.append("name", routeName);
         }
+        // Если выбрана достопримечательность, добавляем параметр "landmark" к URL
         if (landmark && landmark !== "Выберите достопримечательность") {
             apiUrl.searchParams.append("landmark", landmark);
         }
+        // Отправляем GET-запрос на сервер с использованием fetch
         fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Ошибка при запросе данных: ${response.status}`);
             }
+            // Преобразуем ответ в JSON
             return response.json();
         })
         .then(data => {
+            // Обрабатываем полученные данные в виде JSON
             if (landmark && landmark !== "Выберите достопримечательность") {
+                // Если выбрана достопримечательность, отображаем отфильтрованные маршруты
                 renderFilteredRoutesByLandmark(data, landmark);
             } else if (routeName) {
+                // Если указано название маршрута, отображаем отфильтрованные маршруты
                 renderFilteredRoutesByName(data, routeName);
             } else {
+                // Иначе отображаем все маршруты
                 renderRoutes(data);
             }
+            // Выводим полученные данные в виде JSON в консоль для отладки
             logJSON(data);
         })
         .catch(error => {
+            // Обрабатываем ошибку, если запрос не удался
             console.error(`Ошибка при запросе данных: ${error}`);
         });
 }
     // Функция фильтра маршрутов по названия
     function renderFilteredRoutesByName(routes, routeName) {
+        // Фильтруем маршруты по названию, преобразуя все названия и искомое название в нижний регистр, чтобы не было проблем с регистрами при сравнениях 
         const filteredRoutes = routes.filter(route => route.name.toLowerCase().includes(routeName.toLowerCase()));
         if (filteredRoutes.length === 0) {
+            // Если не найдено маршрутов с указанным названием, выводим сообщение
             routeList.innerHTML = "<p>Нет маршрутов с указанным названием.</p>";
         } else {
+            // Если найдены маршруты, вызываем функцию renderRoutes для отображения отфильтрованных результатов по названию
             renderRoutes(filteredRoutes);
         }
     }
     // Функция фильтра маршрутов по достопримечательонсти
     function renderFilteredRoutesByLandmark(routes, selectedLandmark) {
-        const filteredRoutes = routes.filter(route => route.mainObject == selectedLandmark);
-        if (filteredRoutes.length === 0) {
-            routeList.innerHTML = "<p>Нет маршрутов для выбранной достопримечательности.</p>";
-        } else {
-            renderRoutes(filteredRoutes);
-        }
+    // Фильтруем маршруты по основному объекту, сравнивая его с выбранной достопримечательностью
+    const filteredRoutes = routes.filter(route => route.mainObject === selectedLandmark);
+    if (filteredRoutes.length === 0) {
+        // Если не найдено маршрутов для выбранной достопримечательности, выводим сообщение
+        routeList.innerHTML = "<p>Нет маршрутов для выбранной достопримечательности.</p>";
+    } else {
+        // Если найдены маршруты, вызываем функцию renderRoutes для отображения отфильтрованных результатов по достопримечательносмтии
+        renderRoutes(filteredRoutes);
     }
+}
     // Функция для загрузки пагинации
     function renderPagination (totalRoutes) {
+        // Вычисляем общее количество страниц 
         const totalPages = Math.ceil(totalRoutes / routesPerPage);
+        // Очищаем существующий контент элемента paginationList
         paginationList.innerHTML = "";
+        // Создаем элементы пагинации с помощью DOM-методов
         const paginationNav = document.createElement("nav");
         paginationNav.setAttribute("aria-label", "Page navigation example");
         const pagination = document.createElement("ul");
         pagination.className = "pagination justify-content-center";
+        // Создаем элемент "Предыдущая страница"
         const prevPageItem = document.createElement("li");
         prevPageItem.className = "page-item";
         const prevPageLink = document.createElement("a");
@@ -353,14 +376,16 @@ document.addEventListener("DOMContentLoaded", function () {
         prevPageLink.textContent = "Предыдущая";
         prevPageLink.addEventListener("click", (e) => {
             e.preventDefault();
+            // Переключаемся на предыдущую страницу, если текущая страница не первая
             if (currentPage > 1) {
                 currentPage--;
+                // Вызываем функцию getRoutes() с обновленным номером страницы
                 getRoutes(apiKey, currentPage);
             }
         });
         prevPageItem.appendChild(prevPageLink);
         pagination.appendChild(prevPageItem);
-
+        // Создаем элементы для каждой страницы
         for (let i = 1; i <= totalPages; i++) {
             const pageLink = document.createElement("li");
             pageLink.className = "page-item";
@@ -373,6 +398,7 @@ document.addEventListener("DOMContentLoaded", function () {
             link.textContent = i;
             link.addEventListener("click", (e) => {
                 e.preventDefault();
+                // Переключаемся на выбранную страницу и выполняем поиск маршрутов
                 currentPage = i;
                 const routeName = document.getElementById("routeName").value;
             const landmark = document.getElementById("landmarkSelect").value;
@@ -381,6 +407,7 @@ document.addEventListener("DOMContentLoaded", function () {
             pageLink.appendChild(link);
             pagination.appendChild(pageLink);
         }
+        // Создаем элемент "Следующая страница"
         const nextPageItem = document.createElement("li");
         const nextPageLink = document.createElement("a");
         nextPageItem.className = "page-item";
@@ -389,18 +416,20 @@ document.addEventListener("DOMContentLoaded", function () {
         nextPageLink.textContent = "Следующая";
         nextPageLink.addEventListener("click", (e) => {
             e.preventDefault();
+            // Переключаемся на следующую страницу, если текущая страница не последняя
             if (currentPage < totalPages) {
                 currentPage++;
+                // Вызываем функцию getRoutes с обновленным номером страницы
                 getRoutes(apiKey, currentPage);
             }
         });
         nextPageItem.appendChild(nextPageLink);
         pagination.appendChild(nextPageItem);
-
+        // Добавляем элементы пагинации к родительскому элементу и отображаем их на странице
         paginationNav.appendChild(pagination);
         paginationList.appendChild(paginationNav);
     }
-    // Функция для сжатия текста
+    // Функция инициализирует всплывающие подсказки для сжатых элементов
     function tooltipInit() {
         const tooltips = document.querySelectorAll(".tt");
         tooltips.forEach((t) => {
