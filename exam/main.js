@@ -1,6 +1,5 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable max-len */
-/* eslint-disable indent */
 document.addEventListener("DOMContentLoaded", function () {
     // Объявляю большинство переменных
     const apiKey = "6121ea40-7871-49f0-a7ce-4da920caa005";
@@ -35,111 +34,111 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Ошибка при преобразовании JSON:", error);
         }
     }
-  // Функция для получения списка маршрутов с сервера
-  function getRoutes(apiKey, page = 1) {
+    // Функция для получения списка маршрутов с сервера
+    function getRoutes(apiKey, page = 1) {
     // Создаем новый объект XMLHttpRequest
-    const xhr = new XMLHttpRequest();
-    // Создаем URL для запроса
-    const apiUrl = `http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes?api_key=${apiKey}&page=${page}`;
-    // Открываем GET-запрос на указанный URL
-    xhr.open('GET', apiUrl, true);
-    // Устанавливаем обработчик события для обработки ответа от сервера
-    xhr.onload = function() {
-        if (xhr.status === 200) {
+        const xhr = new XMLHttpRequest();
+        // Создаем URL для запроса
+        const apiUrl = `http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes?api_key=${apiKey}&page=${page}`;
+        // Открываем GET-запрос на указанный URL
+        xhr.open('GET', apiUrl, true);
+        // Устанавливаем обработчик события для обработки ответа от сервера
+        xhr.onload = function() {
+            if (xhr.status === 200) {
             // Если запрос успешен (статус 200), обрабатываем ответ
-            const data = JSON.parse(xhr.responseText);
-            // Вызываем функцию renderRoutes для отображения полученных маршрутов на странице
-            renderRoutes(data);
-            // Выводим полученные данные в виде JSON в консоль для отладки
-            logJSON(data);
-        } else {
+                const data = JSON.parse(xhr.responseText);
+                // Вызываем функцию renderRoutes для отображения полученных маршрутов на странице
+                renderRoutes(data);
+                // Выводим полученные данные в виде JSON в консоль для отладки
+                logJSON(data);
+            } else {
             // Если произошла ошибка, выводим ее в консоль
-            console.error(`Ошибка при запросе данных: ${xhr.statusText}`);
-        }
-    };
-    // Устанавливаем обработчик события для обработки ошибок запроса
-    xhr.onerror = function() {
-        console.error('Произошла ошибка сети при выполнении запроса.');
-    };
-    // Отправляем GET-запрос
-    xhr.send();
-}
+                console.error(`Ошибка при запросе данных: ${xhr.statusText}`);
+            }
+        };
+        // Устанавливаем обработчик события для обработки ошибок запроса
+        xhr.onerror = function() {
+            console.error('Произошла ошибка сети при выполнении запроса.');
+        };
+        // Отправляем GET-запрос
+        xhr.send();
+    }
     // Функция для загрузки гидов и прорисовки таблицы
     function renderGuides(guides) {
-    const guidesContainer = document.getElementById('guides-container');
-    guidesContainer.innerHTML = ''; //Очищаем содержимое элемента с ID "route-list" на странице
-     // Если нет доступных гидов, выводим сообщение об отсутствии гидов и завершаем выполнение функции
-    if (guides.length === 0) {
-        const noGuidesMessage = document.createElement('p');
-        noGuidesMessage.textContent = 'Для выбранного маршрута нет доступных гидов.';
-        guidesContainer.appendChild(noGuidesMessage);
-        return;
-    }
-    // Создаем HTML-таблицу для отображения списка маршрутов
-    const table = document.createElement('table');
-    table.classList.add('table', 'table-bordered', 'table-hover');
-    // Создаем заголовок таблицы
-    const thead = document.createElement('thead');
-    const headerRow = document.createElement('tr');
-    const headers = ['Картинка профиля', 'ФИО', 'Языки', 'Опыт работы', 'Стоимость (руб/час)', 'Выбор'];
-    // Создаем заголовки столбцов таблицы и добавляем их в строку заголовка
-    headers.forEach(headerText => {
-        const th = document.createElement('th');
-        th.textContent = headerText;
-        headerRow.appendChild(th);
-    });
-    thead.appendChild(headerRow);
-    table.appendChild(thead);
-    const tbody = document.createElement('tbody');
-    // Для каждого гида создаем строку таблицы и заполняем ее данными
-    guides.forEach(guide => {
-        const row = document.createElement('tr');
-        // Вставляем изображение профиля гида 
-        const profileImageCell = document.createElement('td');
-        profileImageCell.innerHTML = '<img src="images/11.webp" style="max-width: 50px; max-height: 50px;">';
-        row.appendChild(profileImageCell);
-        //Вставляем имя гида 
-        const nameCell = document.createElement('td');
-        nameCell.textContent = guide.name;
-        row.appendChild(nameCell);
-        //Вставляем язык гида
-        const languagesCell = document.createElement('td');
-        languagesCell.textContent = guide.language;
-        row.appendChild(languagesCell);
-        //Вставялем опыт работы гида
-        const experienceCell = document.createElement('td');
-        experienceCell.textContent = guide.workExperience + ' лет';
-        row.appendChild(experienceCell);
-        //Вставляем цену гида
-        const priceCell = document.createElement('td');
-        priceCell.textContent = guide.pricePerHour + ' руб/час';
-        row.appendChild(priceCell);
-        //Вставляем кнопку нанять
-        const selectCell = document.createElement('td');
-        const selectButton = document.createElement('button');
-        selectButton.className = 'btn btn-primary';
-        selectButton.textContent = 'Нанять';
-        // Если гид выбран, выделяем соответствующую строку таблицы
-        if (guide.id === selectedGuideId) {
-            row.classList.add('table-success'); 
+        const guidesContainer = document.getElementById('guides-container');
+        guidesContainer.innerHTML = ''; //Очищаем содержимое элемента с ID "route-list" на странице
+        // Если нет доступных гидов, выводим сообщение об отсутствии гидов и завершаем выполнение функции
+        if (guides.length === 0) {
+            const noGuidesMessage = document.createElement('p');
+            noGuidesMessage.textContent = 'Для выбранного маршрута нет доступных гидов.';
+            guidesContainer.appendChild(noGuidesMessage);
+            return;
         }
-        // Добавляем обработчик события для кнопки нанять для выбора гида
-        selectButton.addEventListener('click', () => {
-            if (guide.id === selectedGuideId) {
-                selectedGuideId = null;
-                row.classList.remove('table-success');
-            } else {
-                selectedGuideId = guide.id;
-                row.classList.add('table-success');
-            }
+        // Создаем HTML-таблицу для отображения списка маршрутов
+        const table = document.createElement('table');
+        table.classList.add('table', 'table-bordered', 'table-hover');
+        // Создаем заголовок таблицы
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        const headers = ['Картинка профиля', 'ФИО', 'Языки', 'Опыт работы', 'Стоимость (руб/час)', 'Выбор'];
+        // Создаем заголовки столбцов таблицы и добавляем их в строку заголовка
+        headers.forEach(headerText => {
+            const th = document.createElement('th');
+            th.textContent = headerText;
+            headerRow.appendChild(th);
         });
-        selectCell.appendChild(selectButton);
-        row.appendChild(selectCell);
-        tbody.appendChild(row);
-    });
-    table.appendChild(tbody);
-    guidesContainer.appendChild(table);
-}
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+        const tbody = document.createElement('tbody');
+        // Для каждого гида создаем строку таблицы и заполняем ее данными
+        guides.forEach(guide => {
+            const row = document.createElement('tr');
+            // Вставляем изображение профиля гида 
+            const profileImageCell = document.createElement('td');
+            profileImageCell.innerHTML = '<img src="images/11.webp" style="max-width: 50px; max-height: 50px;">';
+            row.appendChild(profileImageCell);
+            //Вставляем имя гида 
+            const nameCell = document.createElement('td');
+            nameCell.textContent = guide.name;
+            row.appendChild(nameCell);
+            //Вставляем язык гида
+            const languagesCell = document.createElement('td');
+            languagesCell.textContent = guide.language;
+            row.appendChild(languagesCell);
+            //Вставялем опыт работы гида
+            const experienceCell = document.createElement('td');
+            experienceCell.textContent = guide.workExperience + ' лет';
+            row.appendChild(experienceCell);
+            //Вставляем цену гида
+            const priceCell = document.createElement('td');
+            priceCell.textContent = guide.pricePerHour + ' руб/час';
+            row.appendChild(priceCell);
+            //Вставляем кнопку нанять
+            const selectCell = document.createElement('td');
+            const selectButton = document.createElement('button');
+            selectButton.className = 'btn btn-primary';
+            selectButton.textContent = 'Нанять';
+            // Если гид выбран, выделяем соответствующую строку таблицы
+            if (guide.id === selectedGuideId) {
+                row.classList.add('table-success'); 
+            }
+            // Добавляем обработчик события для кнопки нанять для выбора гида
+            selectButton.addEventListener('click', () => {
+                if (guide.id === selectedGuideId) {
+                    selectedGuideId = null;
+                    row.classList.remove('table-success');
+                } else {
+                    selectedGuideId = guide.id;
+                    row.classList.add('table-success');
+                }
+            });
+            selectCell.appendChild(selectButton);
+            row.appendChild(selectCell);
+            tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+        guidesContainer.appendChild(table);
+    }
     //загрузка гидов по ID выбранного маршрута
     function loadGuides(routeId) {
         if (routeId !== null) {
@@ -303,33 +302,33 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         // Отправляем GET-запрос на сервер с использованием fetch
         fetch(apiUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Ошибка при запросе данных: ${response.status}`);
-            }
-            // Преобразуем ответ в JSON
-            return response.json();
-        })
-        .then(data => {
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Ошибка при запросе данных: ${response.status}`);
+                }
+                // Преобразуем ответ в JSON
+                return response.json();
+            })
+            .then(data => {
             // Обрабатываем полученные данные в виде JSON
-            if (landmark && landmark !== "Выберите достопримечательность") {
+                if (landmark && landmark !== "Выберите достопримечательность") {
                 // Если выбрана достопримечательность, отображаем отфильтрованные маршруты
-                renderFilteredRoutesByLandmark(data, landmark);
-            } else if (routeName) {
+                    renderFilteredRoutesByLandmark(data, landmark);
+                } else if (routeName) {
                 // Если указано название маршрута, отображаем отфильтрованные маршруты
-                renderFilteredRoutesByName(data, routeName);
-            } else {
+                    renderFilteredRoutesByName(data, routeName);
+                } else {
                 // Иначе отображаем все маршруты
-                renderRoutes(data);
-            }
-            // Выводим полученные данные в виде JSON в консоль для отладки
-            logJSON(data);
-        })
-        .catch(error => {
+                    renderRoutes(data);
+                }
+                // Выводим полученные данные в виде JSON в консоль для отладки
+                logJSON(data);
+            })
+            .catch(error => {
             // Обрабатываем ошибку, если запрос не удался
-            console.error(`Ошибка при запросе данных: ${error}`);
-        });
-}
+                console.error(`Ошибка при запросе данных: ${error}`);
+            });
+    }
     // Функция фильтра маршрутов по названия
     function renderFilteredRoutesByName(routes, routeName) {
         // Фильтруем маршруты по названию, преобразуя все названия и искомое название в нижний регистр, чтобы не было проблем с регистрами при сравнениях 
@@ -345,15 +344,15 @@ document.addEventListener("DOMContentLoaded", function () {
     // Функция фильтра маршрутов по достопримечательонсти
     function renderFilteredRoutesByLandmark(routes, selectedLandmark) {
     // Фильтруем маршруты по основному объекту, сравнивая его с выбранной достопримечательностью
-    const filteredRoutes = routes.filter(route => route.mainObject === selectedLandmark);
-    if (filteredRoutes.length === 0) {
+        const filteredRoutes = routes.filter(route => route.mainObject === selectedLandmark);
+        if (filteredRoutes.length === 0) {
         // Если не найдено маршрутов для выбранной достопримечательности, выводим сообщение
-        routeList.innerHTML = "<p>Нет маршрутов для выбранной достопримечательности.</p>";
-    } else {
+            routeList.innerHTML = "<p>Нет маршрутов для выбранной достопримечательности.</p>";
+        } else {
         // Если найдены маршруты, вызываем функцию renderRoutes для отображения отфильтрованных результатов по достопримечательносмтии
-        renderRoutes(filteredRoutes);
+            renderRoutes(filteredRoutes);
+        }
     }
-}
     // Функция для загрузки пагинации
     function renderPagination (totalRoutes) {
         // Вычисляем общее количество страниц 
@@ -401,8 +400,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Переключаемся на выбранную страницу и выполняем поиск маршрутов
                 currentPage = i;
                 const routeName = document.getElementById("routeName").value;
-            const landmark = document.getElementById("landmarkSelect").value;
-            searchRoutes(apiKey, routeName, landmark, currentPage);
+                const landmark = document.getElementById("landmarkSelect").value;
+                searchRoutes(apiKey, routeName, landmark, currentPage);
             });
             pageLink.appendChild(link);
             pagination.appendChild(pageLink);
